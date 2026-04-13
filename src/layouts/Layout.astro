@@ -1,0 +1,92 @@
+---
+export interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+}
+
+const {
+  title,
+  description,
+  canonical = 'https://silviacorpas.vercel.app',
+} = Astro.props;
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "HairSalon",
+  "name": "Silvia Corpas — Peluquería y Estética Avanzada",
+  "description": "Peluquería y estética avanzada en [Ciudad]. Cortes, coloración, tratamientos capilares y servicios de belleza premium.",
+  "url": "https://silviacorpas.vercel.app",
+  "logo": "https://silviacorpas.vercel.app/logo.jpg",
+  "image": "https://silviacorpas.vercel.app/logo.jpg",
+  "telephone": "",
+  "priceRange": "€€",
+  "currenciesAccepted": "EUR",
+  "paymentAccepted": "Cash, Credit Card",
+  "sameAs": [
+    "https://www.instagram.com/silvia.corpas/",
+    "https://www.facebook.com/corpasstyle/",
+    "https://www.tiktok.com/@silvia.corpas"
+  ],
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "09:00",
+      "closes": "14:00"
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0a0a0a" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://silviacorpas.vercel.app/og-image.jpg" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="Silvia Corpas" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://silviacorpas.vercel.app/og-image.jpg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

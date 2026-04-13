@@ -543,13 +543,16 @@ import Layout from '../layouts/Layout.astro';
     z-index: 2;
     white-space: nowrap;
   }
-  .about-deco-border {
+  /* esquinas decorativas DENTRO del card */
+  .about-card-corner {
     position: absolute;
-    top: -12px; right: -12px;
-    width: 90px; height: 90px;
-    border: 1px solid rgba(201,169,110,0.25);
+    width: 28px; height: 28px;
     pointer-events: none;
   }
+  .about-card-corner--tl { top: 14px; left: 14px; border-top: 1px solid rgba(201,169,110,0.45); border-left: 1px solid rgba(201,169,110,0.45); }
+  .about-card-corner--tr { top: 14px; right: 14px; border-top: 1px solid rgba(201,169,110,0.45); border-right: 1px solid rgba(201,169,110,0.45); }
+  .about-card-corner--bl { bottom: 14px; left: 14px; border-bottom: 1px solid rgba(201,169,110,0.45); border-left: 1px solid rgba(201,169,110,0.45); }
+  .about-card-corner--br { bottom: 14px; right: 14px; border-bottom: 1px solid rgba(201,169,110,0.45); border-right: 1px solid rgba(201,169,110,0.45); }
 
   .about-list { list-style: none; margin-top: 2.2rem; display: flex; flex-direction: column; gap: 0.9rem; }
   .about-list li {
@@ -569,6 +572,10 @@ import Layout from '../layouts/Layout.astro';
   <div class="about-inner">
     <div class="about-visual">
       <div class="about-card">
+        <div class="about-card-corner about-card-corner--tl"></div>
+        <div class="about-card-corner about-card-corner--tr"></div>
+        <div class="about-card-corner about-card-corner--bl"></div>
+        <div class="about-card-corner about-card-corner--br"></div>
         <div class="about-logo-big">
           <img src="/logo.jpg" alt="Silvia Corpas logo" width="120" height="120" />
         </div>
@@ -576,7 +583,6 @@ import Layout from '../layouts/Layout.astro';
         <span class="about-monogram">SC</span>
       </div>
       <div class="about-deco-badge">+10 años de experiencia</div>
-      <div class="about-deco-border"></div>
     </div>
 
     <div class="about-text">
@@ -602,61 +608,46 @@ import Layout from '../layouts/Layout.astro';
   </div>
 </section>
 
-<!-- ══════════ GALERÍA ══════════ -->
+<!-- ══════════ GALERÍA — FEED INSTAGRAM (Behold.so) ══════════ -->
 <style>
   .gallery-section { padding: 6rem 3rem; text-align: center; }
   .gallery-section .section-tag { justify-content: center; }
+  .gallery-section .section-lead { margin: 0.8rem auto 3rem; text-align: center; }
 
-  /* Grid decorativo premium con texto */
-  .gallery-grid {
+  /* Grid de embeds de Instagram */
+  .ig-embeds-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 3px;
-    max-width: 960px;
-    margin: 3rem auto 2.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto 2.5rem;
+    align-items: start;
   }
-  .g-cell {
-    background: var(--dark);
+  .ig-embed-wrap {
     border: 1px solid var(--border);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 2rem 1.5rem;
-    gap: 0.6rem;
-    transition: background 0.3s, border-color 0.3s;
-    min-height: 160px;
+    background: var(--dark);
+    overflow: hidden;
+    transition: border-color 0.3s;
   }
-  .g-cell:hover { background: #161616; border-color: rgba(201,169,110,0.3); }
-  .g-cell:first-child {
-    grid-row: 1 / 3;
-    min-height: 340px;
-    background: linear-gradient(145deg, #141414 0%, #0f0f0f 100%);
+  .ig-embed-wrap:hover { border-color: rgba(201,169,110,0.35); }
+
+  /* Fuerza ancho completo en los iframes de Instagram */
+  .ig-embed-wrap .instagram-media {
+    min-width: unset !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
   }
-  .g-cell-icon {
-    width: 40px; height: 40px;
-    border: 1px solid rgba(201,169,110,0.25);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--gold);
+
+  @media (max-width: 768px) {
+    .ig-embeds-grid { grid-template-columns: 1fr; max-width: 480px; }
   }
-  .g-cell-label {
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(248,245,240,0.4);
-  }
-  .g-cell-big-label {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    color: rgba(201,169,110,0.5);
-    letter-spacing: 0.05em;
-  }
+
   .gallery-cta-row {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 1rem;
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;
   }
   .btn-ig {
     display: inline-flex; align-items: center; gap: 0.6rem;
@@ -678,40 +669,51 @@ import Layout from '../layouts/Layout.astro';
   .btn-tt:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
 
   @media (max-width: 640px) {
-    .gallery-grid { grid-template-columns: 1fr 1fr; }
-    .g-cell:first-child { grid-row: auto; grid-column: 1 / 3; min-height: 160px; }
     .gallery-section { padding: 4rem 1.5rem; }
+    .ig-feed-placeholder { grid-template-columns: repeat(2,1fr); }
+    .ig-ph-cell:first-child { grid-column: span 2; grid-row: span 1; }
   }
 </style>
 
 <section id="galeria" class="gallery-section" aria-label="Galería de trabajos Silvia Corpas">
   <p class="section-tag">Nuestros trabajos</p>
   <h2 class="section-title" style="text-align:center;">Resultados que<br/><em>hablan</em> por sí solos</h2>
-  <p class="section-lead" style="margin:0.8rem auto 0;text-align:center;">Sigue el trabajo de Silvia día a día en Instagram y TikTok.</p>
+  <p class="section-lead">Últimas publicaciones de Instagram — actualizadas automáticamente.</p>
 
-  <div class="gallery-grid" aria-hidden="true">
-    <div class="g-cell">
-      <img src="/logo.jpg" alt="" width="70" height="70" style="border-radius:50%;opacity:0.35;margin-bottom:0.5rem;" />
-      <span class="g-cell-big-label">Silvia Corpas</span>
-      <span class="g-cell-label">@silvia.corpas</span>
+  <!-- 3 posts reales de @silvia.corpas -->
+  <div class="ig-embeds-grid">
+
+    <div class="ig-embed-wrap">
+      <blockquote
+        class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DT5gygdjNHT/?utm_source=ig_embed"
+        data-instgrm-version="14"
+        style="background:#fff;border:0;border-radius:0;box-shadow:none;margin:0;max-width:100%;min-width:0;padding:0;width:100%;">
+      </blockquote>
     </div>
-    <div class="g-cell">
-      <div class="g-cell-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-      <span class="g-cell-label">Coloración</span>
+
+    <div class="ig-embed-wrap">
+      <blockquote
+        class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/p/DTxuLIoDAMJ/?utm_source=ig_embed"
+        data-instgrm-version="14"
+        style="background:#fff;border:0;border-radius:0;box-shadow:none;margin:0;max-width:100%;min-width:0;padding:0;width:100%;">
+      </blockquote>
     </div>
-    <div class="g-cell">
-      <div class="g-cell-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/></svg></div>
-      <span class="g-cell-label">Corte</span>
+
+    <div class="ig-embed-wrap">
+      <blockquote
+        class="instagram-media"
+        data-instgrm-permalink="https://www.instagram.com/reel/CtHSATWIVFy/?utm_source=ig_embed"
+        data-instgrm-version="14"
+        style="background:#fff;border:0;border-radius:0;box-shadow:none;margin:0;max-width:100%;min-width:0;padding:0;width:100%;">
+      </blockquote>
     </div>
-    <div class="g-cell">
-      <div class="g-cell-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
-      <span class="g-cell-label">Tratamientos</span>
-    </div>
-    <div class="g-cell">
-      <div class="g-cell-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-      <span class="g-cell-label">Estética</span>
-    </div>
+
   </div>
+
+  <!-- Script oficial de Instagram (carga asíncrona, no bloquea) -->
+  <script async src="https://www.instagram.com/embed.js"></script>
 
   <div class="gallery-cta-row">
     <a href="https://www.instagram.com/silvia.corpas/" class="btn-ig" target="_blank" rel="noopener noreferrer">

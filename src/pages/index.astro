@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Silvia Corpas | Peluquería y Estética Avanzada"
-  description="Peluquería y estética avanzada. Especialistas en coloración, corte, tratamientos capilares y belleza premium. Pide tu cita por WhatsApp."
+  title="Silvia Corpas | Peluquería y Estética Avanzada · Liposonix, Láser & Crioterapia"
+  description="Peluquería y estética avanzada en Málaga. Especialistas en coloración, Liposonix, crioterapia, láser y tratamientos corporales premium. Pide tu cita por WhatsApp."
 >
 
 <style is:global>
@@ -285,7 +285,7 @@ import Layout from '../layouts/Layout.astro';
       <img src="/logo.jpg" alt="Logo Silvia Corpas" width="88" height="88" />
     </div>
     <h1 class="hero-title">El arte de<br/><em>transformar</em> tu imagen</h1>
-    <p class="hero-sub">Coloración &nbsp;·&nbsp; Corte &nbsp;·&nbsp; Tratamientos &nbsp;·&nbsp; Estética</p>
+    <p class="hero-sub">Coloración &nbsp;·&nbsp; Liposonix &nbsp;·&nbsp; Láser &nbsp;·&nbsp; Crioterapia &nbsp;·&nbsp; Radiofrecuencia</p>
     <div class="hero-actions">
       <a href="https://wa.me/34000000000?text=Hola%20Silvia%2C%20me%20gustar%C3%ADa%20pedir%20cita" class="btn-primary" target="_blank" rel="noopener noreferrer">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -380,8 +380,9 @@ import Layout from '../layouts/Layout.astro';
     padding: 2.2rem 1.8rem;
     position: relative;
     overflow: hidden;
-    transition: background 0.35s var(--ease);
+    transition: background 0.4s var(--ease);
   }
+  /* Gold bottom line on hover */
   .svc-card::after {
     content: '';
     position: absolute;
@@ -390,10 +391,45 @@ import Layout from '../layouts/Layout.astro';
     background: var(--gold);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.35s var(--ease);
+    transition: transform 0.4s var(--ease);
+    z-index: 2;
   }
-  .svc-card:hover { background: #111; }
+  .svc-card:hover { background: #0d0d0d; }
   .svc-card:hover::after { transform: scaleX(1); }
+
+  /* Background image with zoom */
+  .svc-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .svc-bg img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.08;
+    transform: scale(1.07);
+    transition: transform 0.8s var(--ease), opacity 0.6s var(--ease);
+    filter: grayscale(50%) sepia(15%);
+    display: block;
+  }
+  /* Gradient overlay so text stays readable */
+  .svc-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba(10,10,10,0.55) 0%,
+      rgba(10,10,10,0.82) 100%
+    );
+  }
+  .svc-card:hover .svc-bg img {
+    transform: scale(1.16);
+    opacity: 0.22;
+  }
+
+  /* Content above background */
   .svc-icon {
     width: 42px; height: 42px;
     border: 1px solid rgba(201,169,110,0.28);
@@ -401,21 +437,19 @@ import Layout from '../layouts/Layout.astro';
     margin-bottom: 1.4rem;
     color: var(--gold);
     transition: background 0.3s;
+    position: relative; z-index: 1;
   }
-  .svc-card:hover .svc-icon { background: rgba(201,169,110,0.08); }
+  .svc-card:hover .svc-icon { background: rgba(201,169,110,0.1); }
   .svc-name {
     font-family: var(--font-serif);
     font-size: 1.25rem;
     font-weight: 400;
     margin-bottom: 0.7rem;
+    position: relative; z-index: 1;
   }
-  .svc-desc { font-size: 0.76rem; color: var(--gray); line-height: 1.85; }
-  .svc-price {
-    margin-top: 1.1rem;
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--gold);
+  .svc-desc {
+    font-size: 0.76rem; color: var(--gray); line-height: 1.85;
+    position: relative; z-index: 1;
   }
   @media (max-width: 880px) { .services-grid { grid-template-columns: repeat(2,1fr); } }
   @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr; } .section-wrap { padding: 4rem 1.5rem; } }
@@ -424,44 +458,81 @@ import Layout from '../layouts/Layout.astro';
 <section id="servicios" aria-label="Servicios de peluquería y estética Silvia Corpas">
   <div class="section-wrap">
     <p class="section-tag">Nuestros servicios</p>
-    <h2 class="section-title">Todo lo que tu<br/><em>belleza</em> necesita</h2>
-    <p class="section-lead">Tratamientos personalizados con los mejores productos del mercado. Porque tu imagen merece lo mejor.</p>
+    <h2 class="section-title">Peluquería y estética<br/><em>avanzada</em> a tu medida</h2>
+    <p class="section-lead">Desde coloración profesional hasta las últimas máquinas de estética corporal y facial. Resultados visibles, trato personalizado.</p>
     <div class="services-grid">
+      <!-- Sustituye los src de cada .svc-bg img por fotos propias del salón -->
       <article class="svc-card">
+        <div class="svc-bg">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=75" alt="" aria-hidden="true" loading="lazy" />
+        </div>
         <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
         <h3 class="svc-name">Corte &amp; Peinado</h3>
         <p class="svc-desc">Cortes personalizados a tu morfología y estilo de vida. Clásicos atemporales o últimas tendencias.</p>
-        <p class="svc-price">Desde 35 €</p>
       </article>
       <article class="svc-card">
+        <div class="svc-bg">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=75" alt="" aria-hidden="true" loading="lazy" />
+        </div>
         <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
         <h3 class="svc-name">Coloración &amp; Mechas</h3>
         <p class="svc-desc">Balayage, highlights, babylights, color global y decoloración. Colores que duran y respetan tu cabello.</p>
-        <p class="svc-price">Desde 60 €</p>
       </article>
       <article class="svc-card">
+        <div class="svc-bg">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=75" alt="" aria-hidden="true" loading="lazy" />
+        </div>
         <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
         <h3 class="svc-name">Tratamientos Capilares</h3>
         <p class="svc-desc">Keratina, hidratación profunda, reconstrucción capilar y rituales de nutrición para revitalizar tu cabello.</p>
-        <p class="svc-price">Desde 80 €</p>
       </article>
       <article class="svc-card">
-        <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
-        <h3 class="svc-name">Alisado Japonés</h3>
-        <p class="svc-desc">Alisado permanente que transforma el cabello rizado o con frizz en una melena lisa y sedosa de larga duración.</p>
-        <p class="svc-price">Desde 150 €</p>
+        <div class="svc-bg">
+          <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=600&q=75" alt="" aria-hidden="true" loading="lazy" />
+        </div>
+        <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><path d="M8 3.5A9 9 0 0 1 21 12"/></svg></div>
+        <h3 class="svc-name">HIFU</h3>
+        <p class="svc-desc">Ultrasonidos focalizados de alta intensidad para lifting sin bisturí. Tensa, reafirma y rejuvenece la piel del rostro, cuello y escote desde las capas más profundas.</p>
       </article>
       <article class="svc-card">
-        <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
-        <h3 class="svc-name">Extensiones</h3>
-        <p class="svc-desc">Cabello natural 100% con métodos adaptados a cada tipo de cabello para un resultado completamente natural.</p>
-        <p class="svc-price">Desde 200 €</p>
+        <div class="svc-bg">
+          <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=75" alt="" aria-hidden="true" loading="lazy" />
+        </div>
+        <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 12c0-4.97 4.03-9 9-9s9 4.03 9 9"/><path d="M3 12c2-2 4-3 6-3s4 1 6 3"/><path d="M9 17l3-5 3 5"/></svg></div>
+        <h3 class="svc-name">Maderoterapia</h3>
+        <p class="svc-desc">Técnica de masaje corporal con instrumentos de madera que activa la circulación, reduce la celulitis y moldea la silueta de forma natural y sin dolor.</p>
       </article>
       <article class="svc-card">
-        <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3 class="svc-name">Estética Avanzada</h3>
-        <p class="svc-desc">Manicura, pedicura, tratamientos faciales y rituales de belleza integrales. Cuídate de pies a cabeza.</p>
-        <p class="svc-price">Desde 40 €</p>
+        <div class="svc-bg">
+          <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&q=75" alt="" aria-hidden="true" loading="lazy" />
+        </div>
+        <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg></div>
+        <h3 class="svc-name">Liposonix &amp; Crioterapia</h3>
+        <p class="svc-desc">Reducción de grasa localizada sin cirugía. Liposonix focaliza ultrasonidos de alta intensidad; la crioterapia elimina células grasas por frío controlado. Resultados visibles desde la primera sesión.</p>
+      </article>
+      <article class="svc-card">
+        <div class="svc-bg">
+          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=75" alt="" aria-hidden="true" loading="lazy" />
+        </div>
+        <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <h3 class="svc-name">Láser &amp; Radiofrecuencia</h3>
+        <p class="svc-desc">Depilación láser definitiva, rejuvenecimiento facial y remodelación corporal con radiofrecuencia. Tecnología de última generación para resultados duraderos y piel firme.</p>
+      </article>
+      <article class="svc-card">
+        <div class="svc-bg">
+          <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=600&q=75" alt="" aria-hidden="true" loading="lazy" />
+        </div>
+        <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12s1-3 4-3 4 3 4 3"/><path d="M9 9h.01M15 9h.01"/></svg></div>
+        <h3 class="svc-name">Peeling</h3>
+        <p class="svc-desc">Exfoliación química controlada que elimina las células muertas, unifica el tono, reduce manchas y estimula la renovación celular para una piel más luminosa y tersa.</p>
+      </article>
+      <article class="svc-card">
+        <div class="svc-bg">
+          <img src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=600&q=75" alt="" aria-hidden="true" loading="lazy" />
+        </div>
+        <div class="svc-icon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M22 2 12 12"/><path d="m17 2 5 5-5 5"/></svg></div>
+        <h3 class="svc-name">Microdermoabrasión</h3>
+        <p class="svc-desc">Técnica mecánica de exfoliación profunda que elimina imperfecciones, cicatrices superficiales y líneas finas. Piel renovada, uniforme y con mayor absorción de activos cosméticos.</p>
       </article>
     </div>
   </div>
@@ -587,18 +658,18 @@ import Layout from '../layouts/Layout.astro';
 
     <div class="about-text">
       <p class="section-tag">Sobre mí</p>
-      <h2 class="section-title">Pasión por la<br/><em>excelencia</em> capilar</h2>
+      <h2 class="section-title">Donde la peluquería<br/>se une a la <em>estética avanzada</em></h2>
       <p style="font-size:0.82rem;color:var(--gray);line-height:1.9;margin-bottom:0.9rem;">
-        Soy Silvia Corpas, estilista y especialista en estética avanzada con más de una década de experiencia. Mi filosofía es simple: cada persona es única y merece un servicio completamente personalizado.
+        Soy Silvia Corpas, especialista en peluquería y estética avanzada con más de una década de experiencia. Mi centro combina el arte capilar con las últimas tecnologías estéticas del mercado.
       </p>
       <p style="font-size:0.82rem;color:var(--gray);line-height:1.9;">
-        Combino técnica, creatividad y los mejores productos del mercado para ofrecerte resultados excepcionales que cuidan tu cabello y realzan tu belleza natural.
+        Trabajo con maquinaria de última generación —Liposonix, crioterapia, láser y radiofrecuencia— para ofrecerte resultados reales, seguros y personalizados en cada visita.
       </p>
       <ul class="about-list">
-        <li>Formación continua en las últimas técnicas de coloración</li>
+        <li>Máquinas de estética avanzada: Liposonix, crioterapia, láser y radiofrecuencia</li>
+        <li>Formación continua en las últimas técnicas de coloración y estética</li>
         <li>Trabajo exclusivamente con marcas de cosmética profesional</li>
         <li>Atención personalizada y asesoramiento gratuito de imagen</li>
-        <li>Ambiente íntimo y exclusivo para tu comodidad</li>
       </ul>
       <a href="https://www.instagram.com/silvia.corpas/" class="btn-outline" style="margin-top:2.2rem;display:inline-flex;" target="_blank" rel="noopener noreferrer">
         Ver mi trabajo en Instagram
@@ -727,7 +798,7 @@ import Layout from '../layouts/Layout.astro';
   </div>
 </section>
 
-<!-- ══════════ RESEÑAS ══════════ -->
+<!-- ══════════ RESEÑAS GOOGLE ══════════ -->
 <style>
   .reviews-section { background: var(--dark); padding: 6rem 3rem; }
   .reviews-grid {
@@ -740,7 +811,14 @@ import Layout from '../layouts/Layout.astro';
     transition: border-color 0.3s;
   }
   .review-card:hover { border-color: rgba(201,169,110,0.32); }
-  .review-stars { color: var(--gold); font-size: 0.65rem; letter-spacing: 0.1em; margin-bottom: 0.9rem; }
+  .review-card-header {
+    display: flex; align-items: center; gap: 0.7rem;
+    margin-bottom: 0.9rem;
+  }
+  .review-g-icon {
+    width: 20px; height: 20px; flex-shrink: 0;
+  }
+  .review-stars { color: #fbbc04; font-size: 0.75rem; letter-spacing: 0.06em; line-height: 1; }
   .review-text {
     font-family: var(--font-serif);
     font-size: 0.98rem;
@@ -750,38 +828,114 @@ import Layout from '../layouts/Layout.astro';
     margin-bottom: 1.3rem;
   }
   .review-author { font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gray); }
+  .review-source {
+    font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(138,138,138,0.6); margin-top: 0.3rem;
+  }
   .review-q {
     position: absolute; top: 1.2rem; right: 1.4rem;
     font-family: var(--font-serif); font-size: 3.5rem;
     color: rgba(201,169,110,0.07); line-height: 1;
     pointer-events: none; user-select: none;
   }
+  .reviews-google-cta {
+    display: flex; align-items: center; justify-content: center; gap: 0.8rem;
+    margin-top: 2.8rem;
+  }
+  .btn-google {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    padding: 0.85rem 1.8rem;
+    border: 1px solid rgba(248,245,240,0.15);
+    color: var(--white);
+    font-size: 0.62rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase;
+    transition: border-color 0.3s, color 0.3s, transform 0.25s;
+  }
+  .btn-google:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
   @media (max-width: 768px) { .reviews-grid { grid-template-columns: 1fr; } .reviews-section { padding: 4rem 1.5rem; } }
 </style>
 
-<section class="reviews-section" aria-label="Opiniones de clientas de Silvia Corpas">
+<section class="reviews-section" aria-label="Reseñas de Google de Silvia Corpas">
   <div style="max-width:1100px;margin:0 auto;">
-    <p class="section-tag">Testimonios</p>
+    <!-- Rating header -->
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:0.4rem;">
+      <!-- Google G icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="28" height="28" aria-hidden="true">
+        <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+        <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+        <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+        <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+      </svg>
+      <p class="section-tag" style="margin:0;">Reseñas de Google</p>
+    </div>
     <h2 class="section-title">Lo que dicen<br/>nuestras <em>clientas</em></h2>
+
+    <!-- ✏️ RESEÑAS REALES: Sustituye el texto de cada review-text y review-author
+         con valoraciones reales copiadas de tu perfil de Google Business.
+         Puedes encontrarlas en: Google Maps → busca "Silvia Corpas" → Reseñas -->
     <div class="reviews-grid">
+
       <div class="review-card">
-        <p class="review-stars">★★★★★</p>
-        <p class="review-text">"Silvia es una artista. El balayage quedó perfecto, natural y con una durabilidad increíble. ¡Ya no voy a ningún otro sitio!"</p>
-        <p class="review-author">— María G.</p>
+        <div class="review-card-header">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="review-g-icon" aria-hidden="true">
+            <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+            <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+            <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+            <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+          </svg>
+          <p class="review-stars">★★★★★</p>
+        </div>
+        <p class="review-text">"Magnífica peluquería y trato espectacular de las responsables. Muy buenos precios. Llevo bastantes años llevando a mis hijos allí. Súper recomendables."</p>
+        <p class="review-author">— Antonio Banderas</p>
+        <p class="review-source">Reseña de Google · Hace 4 meses</p>
         <span class="review-q">"</span>
       </div>
+
       <div class="review-card">
-        <p class="review-stars">★★★★★</p>
-        <p class="review-text">"Llevaba años buscando alguien que entendiera mi cabello. Silvia me escuchó, me asesoró y el resultado superó todas mis expectativas."</p>
-        <p class="review-author">— Laura M.</p>
+        <div class="review-card-header">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="review-g-icon" aria-hidden="true">
+            <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+            <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+            <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+            <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+          </svg>
+          <p class="review-stars">★★★★★</p>
+        </div>
+        <p class="review-text">"Todos los tratamientos faciales me lo hago con Silvia. Es una gran profesional y trabaja a unos precios muy razonables. Estoy encantada de ponerme en sus manos."</p>
+        <p class="review-author">— Matilde Luque</p>
+        <p class="review-source">Reseña de Google · Hace 4 meses</p>
         <span class="review-q">"</span>
       </div>
+
       <div class="review-card">
-        <p class="review-stars">★★★★★</p>
-        <p class="review-text">"El tratamiento de keratina es lo mejor que le ha pasado a mi cabello. Completamente transformado. El trato es exquisito."</p>
-        <p class="review-author">— Ana P.</p>
+        <div class="review-card-header">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="review-g-icon" aria-hidden="true">
+            <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+            <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+            <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+            <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+          </svg>
+          <p class="review-stars">★★★★★</p>
+        </div>
+        <p class="review-text">"La verdad que muy contenta. Llevaba años queriendo ponerme un color y por fin dieron con el color. Muy contenta la verdad. Atención y buen trato!!!"</p>
+        <p class="review-author">— Laura Cardona Moreno</p>
+        <p class="review-source">Reseña de Google · Hace 4 meses</p>
         <span class="review-q">"</span>
       </div>
+
+    </div>
+
+    <!-- ✏️ ACTUALIZA el href con la URL de tu perfil de Google Business:
+         Ve a Google Maps → busca tu negocio → pulsa "Compartir" → copia el enlace -->
+    <div class="reviews-google-cta">
+      <a href="https://www.google.com/search?q=Silvia+Corpas+est%C3%A9tica" class="btn-google" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="16" height="16" aria-hidden="true">
+          <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
+          <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"/>
+          <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/>
+          <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/>
+        </svg>
+        Ver todas las reseñas en Google
+      </a>
     </div>
   </div>
 </section>
